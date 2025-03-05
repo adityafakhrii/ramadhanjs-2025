@@ -1,0 +1,3 @@
+// This is a placeholder for the adhan.mp3 file
+// In a real project, you would place the actual MP3 file in the public directory
+// Since we can't include binary files directly, we're using a CDN URL in the code
