@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 const apiKey = process.env.API_KEY;
 
 const apiUrl = `https://hadithapi.com/api/hadiths?apiKey=${apiKey}`;
