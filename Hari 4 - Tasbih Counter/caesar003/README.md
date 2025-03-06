@@ -44,3 +44,15 @@ The `index.js` script includes a shebang (`#!/usr/bin/env node`) at the top, all
 
 // ... rest of the script ...
 ```
+
+Given that above, you can simply add executable permission and make a link to your path so it is accessible anywhere within your system
+
+```bash
+chmod +x <path-to-index.js>
+
+# then create symbolic link
+ln -s <path-to-index.js> ~/.local/bin/daily-hadith # or somewhere else as long as it's defined in your path
+
+# then you can just run it
+daily-hadith
+```
