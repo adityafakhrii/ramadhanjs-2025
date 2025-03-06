@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator - Ramadhan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="bg-white shadow-lg rounded-lg p-6 max-w-md text-center">
+        <h1 class="text-2xl font-bold mb-4">Ramadhan Quote Generator</h1>
+        <p id="quoteText" class="text-lg italic text-gray-700">Klik tombol di bawah untuk mendapatkan quote</p>
+        <p id="quoteSource" class="text-sm text-gray-500 mt-2"></p>
+        <button id="generateQuote" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Tampilkan Quote</button>
+    </div>
+
+    <script>
+        // Data quotes Ramadhan lokal
+        const quotes = [
+            {
+                content: "Ramadhan adalah bulan kesabaran, dan balasan kesabaran adalah surga.",
+                author: "Imam Ali"
+            },
+            {
+                content: "Barangsiapa berpuasa di bulan Ramadhan dengan iman dan mengharap ridha Allah, maka dosanya yang telah lalu akan diampuni.",
+                author: "HR. Bukhari & Muslim"
+            },
+            {
+                content: "Ramadhan mengajarkan kita untuk berempati dengan saudara-saudara kita yang kurang beruntung.",
+                author: "Anonim"
+            },
+            {
+                content: "Bulan Ramadhan adalah bulan yang penuh berkah, bulan yang di dalamnya diturunkan Al-Quran.",
+                author: "QS. Al-Baqarah: 185"
+            },
+            {
+                content: "Di bulan Ramadhan, pintu-pintu surga dibuka, pintu-pintu neraka ditutup, dan setan-setan dibelenggu.",
+                author: "HR. Bukhari & Muslim"
+            },
+            {
+                content: "Puasa bukanlah sekedar menahan lapar dan haus, tetapi juga menahan diri dari perkataan dan perbuatan yang sia-sia.",
+                author: "Imam Al-Ghazali"
+            },
+            {
+                content: "Ramadhan adalah bulan dimana Allah menggandakan pahala amal kebaikan.",
+                author: "Anonim"
+            },
+            {
+                content: "Saat berpuasa, anda merasa lapar dan haus, itulah saat anda harus mengingat betapa berharganya makanan dan minuman.",
+                author: "Anonim"
+            },
+            {
+                content: "Jadikan Ramadhan sebagai bulan untuk membersihkan hati dan pikiran dari segala hal yang tidak baik.",
+                author: "Anonim"
+            },
+            {
+                content: "Ramadhan adalah kesempatan terbaik untuk memperbaiki hubungan dengan Allah dan sesama manusia.",
+                author: "Anonim"
+            }
+        ];
+
+        function getRandomQuote() {
+            try {
+                // Mendapatkan quote acak dari array lokal
+                const randomIndex = Math.floor(Math.random() * quotes.length);
+                const data = quotes[randomIndex];
+                
+                document.getElementById("quoteText").innerText = `"${data.content}"`;
+                document.getElementById("quoteSource").innerText = `- ${data.author}`;
+            } catch (error) {
+                console.error("Error menampilkan quote:", error);
+                document.getElementById("quoteText").innerText = "Gagal memuat quote, coba lagi.";
+                document.getElementById("quoteSource").innerText = "";
+            }
+        }
+
+        document.getElementById("generateQuote").addEventListener("click", getRandomQuote);
+    </script>
+</body>
+</html>
