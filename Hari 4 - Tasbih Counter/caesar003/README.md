@@ -5,6 +5,7 @@ This command-line tool fetches and displays a random hadith from the [hadithapi.
 ## Prerequisites
 
 1.  **API Key:** Create a free account on [hadithapi.com](https://hadithapi.com) to obtain your API key.
+2.  **NodeJS and NPM:** The chance is you have them already on your system. Head to [NodeJS download page](https://nodejs.org/en/download) to install latest stable version in case you haven't.
 
 ## Installation
 
