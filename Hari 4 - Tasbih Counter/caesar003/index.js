@@ -47,4 +47,3 @@ async function fetchAndDisplayHadith() {
 }
 
 fetchAndDisplayHadith();
-
