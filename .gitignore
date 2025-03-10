@@ -1,0 +1,21 @@
+# Environment Variables
+.env
+
+# Dependencies
+node_modules/
+
+# Editor Specific Files
+*.swp         # Vim/Neovim swap files
+*.swo         # Vim/Neovim swap files (older versions)
+*.tags        # Vim/Neovim tags files
+*.backup      # Vim/Neovim backup files
+
+# Notes Directory
+notes/
+
+# OS Specific Files
+.DS_Store      # macOS folder settings
+Thumbs.db       # Windows thumbnail cache
+
+# Log Files
+*.log

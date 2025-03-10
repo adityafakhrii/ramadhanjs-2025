@@ -1,0 +1,26 @@
+{
+  "name": "daily-hadith",
+  "version": "1.0.0",
+  "description": "A command-line tool to fetch and display a random hadith from the hadithapi.com API.",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "hadith": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hadith",
+    "islam",
+    "command-line",
+    "cli"
+  ],
+  "author": "caesar003",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "dotenv": "^16.4.7"
+  }
+}
