@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Ayat Al-Qur'an</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        .font-arabic {
+            font-family: 'Amiri', serif;
+        }
+
+        .font-main {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .neon-border {
+            box-shadow: 0 0 10px #4F46E5, 0 0 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .rotate-loader {
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .theme-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+        }
+
+        .light-mode {
+            --bg-primary: #f3f4f6;
+            --bg-secondary: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --accent: #4F46E5;
+        }
+
+        .dark-mode {
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --accent: #818cf8;
+        }
+    </style>
+</head>
+<body class="dark-mode bg-[color:var(--bg-primary)] text-[color:var(--text-primary)] flex items-center justify-center min-h-screen font-main transition-all duration-500">
+    <div id="particles-js"></div>
+    
+    <div class="theme-switch">
+        <button id="theme-toggle" class="p-2 rounded-full bg-[color:var(--bg-secondary)] text-[color:var(--text-primary)]">
+            <svg id="dark-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+            <svg id="light-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+        </button>
+    </div>
+
+    <div class="content p-4 w-full max-w-2xl">
+        <div class="p-8 rounded-2xl bg-[color:var(--bg-secondary)] shadow-xl neon-border relative overflow-hidden transition-all duration-500 transform hover:scale-[1.02]">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 loading-bar"></div>
+            
+            <div class="text-center">
+                <h1 class="text-3xl font-bold mb-2 text-[color:var(--text-primary)]">
+                    <div id="animate-title">📖 Random Ayat Al-Qur'an</div>
+                </h1>
+                
+                <p class="text-[color:var(--text-secondary)] mb-6">Temukan petunjuk dan ketenangan jiwa dari firman Allah setiap saat</p>
+                
+                <div id="ayah-container">
+                    <div id="loading-spinner" class="mx-auto my-8">
+                        <svg class="rotate-loader mx-auto" width="50" height="50" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z" />
+                        </svg>
+                        <p class="text-[color:var(--text-secondary)] mt-2">Memuat ayat...</p>
+                    </div>
+                    
+                    <p id="ayah-text" class="text-2xl font-semibold font-arabic text-[color:var(--text-primary)] mb-6 leading-relaxed px-2 py-4 rounded-lg opacity-0">
+                        Memuat ayat...
+                    </p>
+                    
+                    <div class="space-y-4 opacity-0" id="ayah-details">
+                        <p id="ayah-translation" class="text-[color:var(--text-secondary)] italic">
+                            Terjemahan...
+                        </p>
+                        
+                        <div class="flex items-center justify-center space-x-2 mt-2">
+                            <div class="h-px bg-[color:var(--accent)] w-16 opacity-50"></div>
+                            <p id="ayah-surah" class="text-sm text-[color:var(--text-secondary)]"></p>
+                            <div class="h-px bg-[color:var(--accent)] w-16 opacity-50"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <button onclick="fetchRandomAyah()" class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <span class="flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            </svg>
+                            Ambil Ayat Baru
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="text-center mt-6 text-[color:var(--text-secondary)] text-sm py-4">
+            <p>RamadhanJS Challenge 2025 - Aditya Fakhri Riansyah</p>
+            <div class="mt-2 text-xs opacity-75">
+                <a href="https://www.instagram.com/adityafakhrii/" target="_blank" class="hover:text-[color:var(--accent)] transition-colors">Instagram</a> • 
+                <a href="https://github.com/adityafakhrii" target="_blank" class="hover:text-[color:var(--accent)] transition-colors">GitHub</a> • 
+                <a href="https://www.linkedin.com/in/adityafakhrii/" target="_blank" class="hover:text-[color:var(--accent)] transition-colors">LinkedIn</a>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles background
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 50,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#818cf8"
+                },
+                "shape": {
+                    "type": "circle",
+                },
+                "opacity": {
+                    "value": 0.15,
+                    "random": true,
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#818cf8",
+                    "opacity": 0.1,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 0.5,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": false,
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.3
+                        }
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Dark/Light mode toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('dark-icon');
+        const lightIcon = document.getElementById('light-icon');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+                
+                // Update particles for light mode
+                window.pJSDom[0].pJS.particles.color.value = '#4F46E5';
+                window.pJSDom[0].pJS.particles.line_linked.color = '#4F46E5';
+                window.pJSDom[0].pJS.fn.particlesRefresh();
+            } else {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+                
+                // Update particles for dark mode
+                window.pJSDom[0].pJS.particles.color.value = '#818cf8';
+                window.pJSDom[0].pJS.particles.line_linked.color = '#818cf8';
+                window.pJSDom[0].pJS.fn.particlesRefresh();
+            }
+        });
+
+        // Animate title on load
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.from("#animate-title", {
+                y: -50,
+                opacity: 0,
+                duration: 1,
+                ease: "back.out(1.7)"
+            });
+        });
+
+        // Fetching random ayah with animations
+        async function fetchRandomAyah() {
+            // Show loading spinner
+            document.getElementById('loading-spinner').style.display = 'block';
+            document.getElementById('ayah-text').style.opacity = 0;
+            document.getElementById('ayah-details').style.opacity = 0;
+            
+            // Animate loading bar
+            gsap.fromTo(".loading-bar", {
+                width: "0%"
+            }, {
+                width: "100%",
+                duration: 2
+            });
+            
+            try {
+                // Random nomor surat dan ayat (ada 114 surat)
+                let surahNumber = Math.floor(Math.random() * 114) + 1;
+                
+                // Fetch jumlah ayat dalam surat tersebut
+                let surahInfo = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}`);
+                let surahData = await surahInfo.json();
+                let ayahNumber = Math.floor(Math.random() * surahData.data.numberOfAyahs) + 1;
+
+                // Fetch ayat random
+                let response = await fetch(`https://api.alquran.cloud/v1/ayah/${surahNumber}:${ayahNumber}/editions/quran-uthmani,id.indonesian`);
+                let data = await response.json();
+
+                // Ambil teks Arab dan terjemahan
+                let arabicText = data.data[0].text;
+                let translation = data.data[1].text;
+                let surahName = data.data[0].surah.englishName;
+                let ayahInfo = `${data.data[0].surah.englishName} (${data.data[0].surah.englishNameTranslation}) - Ayat ${ayahNumber}`;
+
+                // Hide loading spinner after a short delay
+                setTimeout(() => {
+                    // Tampilkan di HTML
+                    document.getElementById("ayah-text").innerText = arabicText;
+                    document.getElementById("ayah-translation").innerText = translation;
+                    document.getElementById("ayah-surah").innerText = ayahInfo;
+                    
+                    document.getElementById('loading-spinner').style.display = 'none';
+                    
+                    // Animate content appearing
+                    gsap.to("#ayah-text", {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power2.out"
+                    });
+                    
+                    gsap.to("#ayah-details", {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        delay: 0.3,
+                        ease: "power2.out"
+                    });
+                }, 1000);
+                
+            } catch (error) {
+                document.getElementById("ayah-text").innerText = "Gagal mengambil ayat.";
+                document.getElementById('loading-spinner').style.display = 'none';
+                document.getElementById('ayah-text').style.opacity = 1;
+                console.error("Error fetching ayah:", error);
+            }
+        }
+
+        // Panggil pertama kali saat halaman dimuat
+        fetchRandomAyah();
+    </script>
+</body>
+</html>
