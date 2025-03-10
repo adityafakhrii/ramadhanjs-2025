@@ -1,0 +1,49 @@
+:root {
+            --primary: #3b82f6;
+            --secondary: #6366f1;
+        }
+        .light {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --border: #e5e7eb;
+        }
+        .dark {
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --border: #374151;
+        }
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        .bg-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+        }
+        .text-secondary {
+            color: var(--text-secondary);
+        }
+        .border-color {
+            border-color: var(--border);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .task-item {
+            border-left: 4px solid var(--primary);
+        }
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: var(--secondary);
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: var(--secondary);
+        }
