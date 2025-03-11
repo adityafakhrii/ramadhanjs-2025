@@ -71,7 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initMap() {
     const googleMapsScript = document.createElement('script');
-    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAvWM4ahFzzbVdUYXrRZPyjnzeFpBz0pUM&libraries=places,marker,geometry&callback=initializeMap&loading=async&v=beta&map_ids=63211094599e0fec`;
+    fetch('api-key.json')
+        .then(response => response.json())
+        .then(data => {
+            googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${data.apiKey}&libraries=places,marker,geometry&callback=initializeMap&loading=async&v=beta&map_ids=63211094599e0fec`;
+            document.head.appendChild(googleMapsScript);
+        })
+        .catch(error => console.error('Error loading API key:', error));
     document.head.appendChild(googleMapsScript);
 }
 
