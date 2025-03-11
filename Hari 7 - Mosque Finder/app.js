@@ -58,17 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// // Initialize Google Maps
-// function initMap() {
-//     // Load Google Maps API script
-//     const googleMapsScript = document.createElement('script');
-//     googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAyA2PuYyUQVLZgkjYmSRcLUCbi0RAac-Y&libraries=places`;
-//     googleMapsScript.defer = true;
-//     googleMapsScript.async = true;
-//     googleMapsScript.onload = initializeMap;
-//     document.head.appendChild(googleMapsScript);
-// }
-
 function initMap() {
     const googleMapsScript = document.createElement('script');
     fetch('api-key.json')
