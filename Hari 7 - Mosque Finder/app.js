@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+<<<<<<< HEAD
 // // Initialize Google Maps
 // function initMap() {
 //     // Load Google Maps API script
@@ -69,6 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
 //     document.head.appendChild(googleMapsScript);
 // }
 
+=======
+>>>>>>> eaf08887c91400f19c0653215447385042e51b94
 function initMap() {
     const googleMapsScript = document.createElement('script');
     fetch('api-key.json')
