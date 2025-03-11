@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whatweather - Info Cuaca Kekinian</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen gradient-bg transition-all duration-300">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <header class="mb-6 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-cloud-sun text-2xl md:text-3xl text-blue-500 animated-icon"></i>
+                <h1 class="text-2xl md:text-3xl font-bold text-white">Whatweather</h1>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-xs text-gray-300">Dark Mode</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </header>
+
+        <main>
+            <div class="mb-6">
+                <div class="flex flex-col md:flex-row gap-3">
+                    <div class="flex-grow">
+                        <div class="relative">
+                            <input type="text" id="cityInput" placeholder="Cari kota lo di sini..." class="w-full px-4 py-3 rounded-lg bg-white/20 backdrop-blur text-white placeholder-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button id="searchBtn" class="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-blue-500">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button style="display: none;" id="locationBtn" class="px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md transition-all flex items-center justify-center gap-2">
+                        <i class="fas fa-location-arrow"></i>
+                        <span>Lokasi Gue</span>
+                    </button>
+                </div>
+                <p id="errorMessage" class="text-red-300 mt-2 hidden"></p>
+            </div>
+
+            <div id="weatherAlerts" class="weather-alert p-4 rounded-lg mb-4 hidden">
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-exclamation-triangle text-red-500 mt-1"></i>
+                    <div>
+                        <h3 class="font-bold text-red-500" id="alertTitle">Peringatan Cuaca</h3>
+                        <p class="text-white text-sm" id="alertDescription"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loadingIndicator" class="hidden flex justify-center my-12">
+                <div class="pulse p-4 bg-blue-500 rounded-full">
+                    <i class="fas fa-cloud text-white text-xl"></i>
+                </div>
+            </div>
+
+            <div id="weatherInfo" class="weather-card p-6 md:p-8 rounded-xl bg-white/10 mb-8 hidden">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h2 id="cityName" class="text-2xl md:text-3xl font-bold text-white"></h2>
+                            <span id="countryCode" class="text-gray-300 text-sm"></span>
+                        </div>
+                        <p id="dateTime" class="text-gray-300"></p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div id="weatherIcon" class="text-5xl text-blue-500 animated-icon"></div>
+                        <div>
+                            <div class="flex items-end">
+                                <span id="temperature" class="text-4xl font-bold text-white"></span>
+                                <span class="text-gray-300 ml-1">°C</span>
+                            </div>
+                            <p id="weatherDescription" class="text-gray-300 capitalize"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                    <div class="bg-white/5 p-4 rounded-lg">
+                        <div class="flex items-center gap-2 text-blue-500 mb-2">
+                            <i class="fas fa-temperature-high"></i>
+                            <span class="text-gray-300 text-sm">Terasa Seperti</span>
+                        </div>
+                        <p id="feelsLike" class="text-xl font-semibold text-white"></p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-lg">
+                        <div class="flex items-center gap-2 text-blue-500 mb-2">
+                            <i class="fas fa-tint"></i>
+                            <span class="text-gray-300 text-sm">Kelembaban</span>
+                        </div>
+                        <p id="humidity" class="text-xl font-semibold text-white"></p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-lg">
+                        <div class="flex items-center gap-2 text-blue-500 mb-2">
+                            <i class="fas fa-wind"></i>
+                            <span class="text-gray-300 text-sm">Kecepatan Angin</span>
+                        </div>
+                        <p id="windSpeed" class="text-xl font-semibold text-white"></p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-lg">
+                        <div class="flex items-center gap-2 text-blue-500 mb-2">
+                            <i class="fas fa-compass"></i>
+                            <span class="text-gray-300 text-sm">Tekanan</span>
+                        </div>
+                        <p id="pressure" class="text-xl font-semibold text-white"></p>
+                    </div>
+                </div>
+
+                <!-- Air Quality Index Section -->
+                <div class="mt-6 bg-white/5 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-white mb-2">Kualitas Udara</h3>
+                    <div class="flex flex-col md:flex-row md:items-center gap-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <i id="aqiIcon" class="fas fa-lungs text-2xl"></i>
+                                <div>
+                                    <p id="aqiValue" class="text-xl font-bold text-white"></p>
+                                    <p id="aqiDescription" class="text-sm text-gray-300"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="w-full bg-white/10 rounded-full h-2.5">
+                                <div id="aqiBar" class="h-2.5 rounded-full" style="width: 0%"></div>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-300 mt-1">
+                                <span>Baik</span>
+                                <span>Berbahaya</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold text-white mb-4">Perkiraan Cuaca Hari Ini</h3>
+                    <div class="overflow-x-auto pb-2">
+                        <div id="hourlyForecast" class="flex gap-4 min-w-max"></div>
+                    </div>
+                </div>
+                
+                <!-- Weekly Forecast Section -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold text-white mb-4">Perkiraan 5 Hari Ke Depan</h3>
+                    <div id="weeklyForecast" class="grid grid-cols-1 md:grid-cols-5 gap-4"></div>
+                </div>
+                
+                <!-- Sun/Moon Information -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white/5 p-4 rounded-lg">
+                        <h3 class="text-lg font-semibold text-white mb-3">Matahari</h3>
+                        <div class="flex justify-between">
+                            <div class="text-center">
+                                <i class="fa-solid fa-cloud-sun text-yellow-500 text-2xl mb-2"></i>
+                                <p class="text-sm text-gray-300">Terbit</p>
+                                <p id="sunrise" class="text-white"></p>
+                            </div>
+                            <div class="text-center">
+                                <i class="fa-solid fa-cloud-sun text-orange-500 text-2xl mb-2"></i>
+                                <p class="text-sm text-gray-300">Terbenam</p>
+                                <p id="sunset" class="text-white"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-lg">
+                        <h3 class="text-lg font-semibold text-white mb-3">Info Tambahan</h3>
+                        <div class="flex justify-between">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-300">Visibilitas</p>
+                          <p id="visibility" class="text-white"></p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-300">UV Index</p>
+                                <p id="uvIndex" class="text-white"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="welcomeMessage" class="text-center my-12">
+                <div class="text-6xl mb-6 text-blue-500 animated-icon">
+                    <i class="fas fa-cloud-sun-rain"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-4">Mau Tau Cuacanya Gimana?</h2>
+                <p class="text-gray-300 mb-6">Cek cuaca dimana lo berada atau cari kota yang lo mau tau cuacanya. Gampang banget!</p>
+                <div class="flex flex-col md:flex-row gap-4 justify-center">
+                    <button id="welcomeLocationBtn" class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md transition-all flex items-center justify-center gap-2 w-full md:w-auto">
+                        <i class="fas fa-location-arrow"></i>
+                        <span>Pake Lokasi Gue Sekarang</span>
+                    </button>
+                    <button id="welcomeSearchBtn" class="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg shadow-md transition-all flex items-center justify-center gap-2 w-full md:w-auto">
+                        <i class="fas fa-search"></i>
+                        <span>Cari Kota Lain</span>
+                    </button>
+                </div>
+
+                <!-- Recent Searches Section -->
+                <div id="recentSearches" class="mt-8 hidden">
+                    <h3 class="text-lg text-white mb-3">Pencarian Terakhir</h3>
+                    <div id="recentSearchesList" class="flex flex-wrap gap-2 justify-center">
+                        <!-- Recent searches will be added here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="mt-8 text-center text-gray-300 text-sm">
+            <p>RamadhanJS Challenge 2025 - Aditya Fakhri Riansyah</p>
+            <p class="mt-2">Dibuat dengan <i class="fas fa-heart text-red-500"></i> pake teknologi kekinian</p>
+            <div class="flex justify-center mt-4 gap-4">
+                <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-twitter"></i></a>
+                <button id="shareBtn" class="text-gray-300 hover:text-white"><i class="fas fa-share-alt"></i></button>
+            </div>
+            <p class="mt-4 text-xs">Data cuaca disediakan oleh <a href="https://openweathermap.org" target="_blank" class="text-blue-400 hover:underline">OpenWeatherMap</a></p>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
