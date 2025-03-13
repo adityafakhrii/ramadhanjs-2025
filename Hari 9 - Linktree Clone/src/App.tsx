@@ -24,6 +24,12 @@ function App() {
 
   const links: LinkItem[] = [
     {
+      title: 'Free Resources for Programmer!',
+      url: 'https://lynk.id/adityafakhrii',
+      icon: <Globe className="w-5 h-5" />,
+      description: 'Free programming resources'
+    },
+    {
       title: 'GitHub',
       url: 'https://github.com/adityafakhrii/',
       icon: <Github className="w-5 h-5" />,
@@ -52,12 +58,6 @@ function App() {
       url: 'mailto:adityafakhri03@gmail.com',
       icon: <Mail className="w-5 h-5" />,
       description: 'Get in touch'
-    },
-    {
-      title: 'Resource Programmer Gratis!',
-      url: 'https://lynk.id/adityafakhrii',
-      icon: <Globe className="w-5 h-5" />,
-      description: 'Free programming resources'
     },
   ];
 
