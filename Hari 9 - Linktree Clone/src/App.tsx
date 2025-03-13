@@ -138,13 +138,13 @@ function App() {
 
       <div className="container mx-auto px-4 py-16 max-w-2xl relative z-10">
         <div className="text-center mb-12">
-          <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden ring-1 ring-[#64ffda] ring-offset-4 ring-offset-transparent">
+            <div className={`w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden ring-1 ${darkMode ? 'ring-[#64ffda]' : 'ring-[#000]'} ring-offset-4 ring-offset-transparent`}>
             <img
               src="https://i.ibb.co.com/tPbYS4M1/profile-pic-9.png"
               alt="Profile"
               className="w-full h-full object-cover"
             />
-          </div>
+            </div>
           <h1 className={`text-4xl font-bold mb-2 ${darkMode ? 'text-[#64ffda]' : 'text-gray-800'}`}>
             Aditya Fakhri Riansyah, S.Kom.
           </h1>
