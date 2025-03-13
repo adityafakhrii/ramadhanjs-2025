@@ -25,39 +25,39 @@ function App() {
   const links: LinkItem[] = [
     {
       title: 'GitHub',
-      url: 'https://github.com',
+      url: 'https://github.com/adityafakhrii/',
       icon: <Github className="w-5 h-5" />,
       description: 'Check out my open source projects'
     },
     {
       title: 'Instagram',
-      url: 'https://instagram.com',
+      url: 'https://www.instagram.com/adityafakhrii/',
       icon: <Instagram className="w-5 h-5" />,
       description: 'Behind the scenes content'
     },
     {
       title: 'YouTube',
-      url: 'https://youtube.com',
+      url: 'https://www.youtube.com/@adityafakhrii',
       icon: <Youtube className="w-5 h-5" />,
       description: 'Tutorial videos and vlogs'
     },
     {
-      title: 'Portfolio',
-      url: 'https://example.com',
-      icon: <Globe className="w-5 h-5" />,
-      description: 'My professional portfolio'
-    },
-    {
       title: 'LinkedIn',
-      url: 'https://linkedin.com',
+      url: 'https://www.linkedin.com/in/adityafakhrii/',
       icon: <Linkedin className="w-5 h-5" />,
       description: 'Professional network'
     },
     {
       title: 'Contact Me',
-      url: 'mailto:example@email.com',
+      url: 'mailto:adityafakhri03@gmail.com',
       icon: <Mail className="w-5 h-5" />,
       description: 'Get in touch'
+    },
+    {
+      title: 'Resource Programmer Gratis!',
+      url: 'https://lynk.id/adityafakhrii',
+      icon: <Globe className="w-5 h-5" />,
+      description: 'Free programming resources'
     },
   ];
 
