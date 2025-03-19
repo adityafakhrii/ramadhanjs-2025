@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalender Ibadah Interaktif</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-sans transition-colors duration-300 light:bg-gray-100 dark:bg-gray-900 light:text-gray-800 dark:text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="mb-8 text-center">
+            <div class="flex justify-end mb-4">
+                <button id="themeToggle" class="theme-toggle p-2 rounded-full transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </button>
+            </div>
+            <h1 class="text-4xl font-bold mb-2 text-transparent bg-clip-text light:bg-gradient-to-r light:from-blue-600 light:to-purple-600 dark:bg-gradient-to-r dark:from-green-400 dark:to-blue-500">Kalender Ibadah Interaktif</h1>
+            <p class="text-lg light:text-gray-600 dark:text-gray-300">Catat dan pantau ibadah harian Anda</p>
+        </header>
+
+        <div class="calendar-container rounded-2xl p-6 mb-8 shadow-lg transition-all duration-300 light:shadow-neon-light dark:shadow-neon-dark">
+            <div class="flex justify-between items-center mb-6">
+                <button id="prevMonth" class="p-2 rounded-full transition light:hover:bg-blue-100 dark:hover:bg-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <h2 id="currentMonth" class="text-2xl font-semibold"></h2>
+                <button id="nextMonth" class="p-2 rounded-full transition light:hover:bg-blue-100 dark:hover:bg-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-7 gap-2 mb-2 text-center">
+                <div class="font-medium text-sm light:text-blue-600 dark:text-green-400">Min</div>
+                <div class="font-medium text-sm light:text-blue-600 dark:text-green-400">Sen</div>
+                <div class="font-medium text-sm light:text-blue-600 dark:text-green-400">Sel</div>
+                <div class="font-medium text-sm light:text-blue-600 dark:text-green-400">Rab</div>
+                <div class="font-medium text-sm light:text-blue-600 dark:text-green-400">Kam</div>
+                <div class="font-medium text-sm light:text-blue-600 dark:text-green-400">Jum</div>
+                <div class="font-medium text-sm light:text-blue-600 dark:text-green-400">Sab</div>
+            </div>
+
+            <div id="calendarDays" class="grid grid-cols-7 gap-2">
+                <!-- Calendar days will be generated here -->
+            </div>
+        </div>
+
+        <div id="worshipDetails" class="hidden my-8">
+            <div class="glass-effect rounded-xl p-6 transition-all duration-300 light:bg-white/80 dark:bg-gray-800/80 light:shadow-neon-light dark:shadow-neon-dark">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="selectedDate" class="text-xl font-bold"></h3>
+                    <button id="closeDetails" class="rounded-full p-1 light:hover:bg-gray-200 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="space-y-3">
+                    <div class="worship-item flex items-center p-3 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <input type="checkbox" id="subuh" class="form-checkbox h-5 w-5 light:text-blue-600 dark:text-green-400 rounded">
+                        <label for="subuh" class="ml-3 light:text-gray-700 dark:text-gray-200">Sholat Subuh</label>
+                    </div>
+                    <div class="worship-item flex items-center p-3 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <input type="checkbox" id="dzuhur" class="form-checkbox h-5 w-5 light:text-blue-600 dark:text-green-400 rounded">
+                        <label for="dzuhur" class="ml-3 light:text-gray-700 dark:text-gray-200">Sholat Dzuhur</label>
+                    </div>
+                    <div class="worship-item flex items-center p-3 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <input type="checkbox" id="ashar" class="form-checkbox h-5 w-5 light:text-blue-600 dark:text-green-400 rounded">
+                        <label for="ashar" class="ml-3 light:text-gray-700 dark:text-gray-200">Sholat Ashar</label>
+                    </div>
+                    <div class="worship-item flex items-center p-3 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <input type="checkbox" id="maghrib" class="form-checkbox h-5 w-5 light:text-blue-600 dark:text-green-400 rounded">
+                        <label for="maghrib" class="ml-3 light:text-gray-700 dark:text-gray-200">Sholat Maghrib</label>
+                    </div>
+                    <div class="worship-item flex items-center p-3 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <input type="checkbox" id="isya" class="form-checkbox h-5 w-5 light:text-blue-600 dark:text-green-400 rounded">
+                        <label for="isya" class="ml-3 light:text-gray-700 dark:text-gray-200">Sholat Isya</label>
+                    </div>
+                    <div class="worship-item flex items-center p-3 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <input type="checkbox" id="tahajud" class="form-checkbox h-5 w-5 light:text-blue-600 dark:text-green-400 rounded">
+                        <label for="tahajud" class="ml-3 light:text-gray-700 dark:text-gray-200">Sholat Tahajud</label>
+                    </div>
+                    <div class="worship-item flex items-center p-3 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <input type="checkbox" id="dhuha" class="form-checkbox h-5 w-5 light:text-blue-600 dark:text-green-400 rounded">
+                        <label for="dhuha" class="ml-3 light:text-gray-700 dark:text-gray-200">Sholat Dhuha</label>
+                    </div>
+                    <div class="worship-item flex items-center p-3 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <input type="checkbox" id="puasa" class="form-checkbox h-5 w-5 light:text-blue-600 dark:text-green-400 rounded">
+                        <label for="puasa" class="ml-3 light:text-gray-700 dark:text-gray-200">Puasa</label>
+                    </div>
+                    <div class="worship-item flex items-center p-3 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <input type="checkbox" id="quran" class="form-checkbox h-5 w-5 light:text-blue-600 dark:text-green-400 rounded">
+                        <label for="quran" class="ml-3 light:text-gray-700 dark:text-gray-200">Membaca Al-Qur'an</label>
+                    </div>
+                    <div class="worship-item flex items-center p-3 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <input type="checkbox" id="dzikir" class="form-checkbox h-5 w-5 light:text-blue-600 dark:text-green-400 rounded">
+                        <label for="dzikir" class="ml-3 light:text-gray-700 dark:text-gray-200">Dzikir & Doa</label>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <button id="saveWorship" class="w-full py-2 rounded-lg font-medium transition-all duration-300 light:bg-blue-600 light:hover:bg-blue-700 dark:bg-green-600 dark:hover:bg-green-700 text-white">Simpan</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-container my-8">
+            <div class="glass-effect rounded-xl p-6 transition-all duration-300 light:bg-white/80 dark:bg-gray-800/80 light:shadow-neon-light dark:shadow-neon-dark">
+                <h3 class="text-xl font-bold mb-4">Statistik Ibadah</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="stat-item text-center p-4 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <h4 class="text-sm mb-1 light:text-gray-600 dark:text-gray-300">Hari Tercatat</h4>
+                        <p id="totalDays" class="text-2xl font-bold light:text-blue-600 dark:text-green-400">0</p>
+                    </div>
+                    <div class="stat-item text-center p-4 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <h4 class="text-sm mb-1 light:text-gray-600 dark:text-gray-300">Total Shalat</h4>
+                        <p id="totalPrayers" class="text-2xl font-bold light:text-blue-600 dark:text-green-400">0</p>
+                    </div>
+                    <div class="stat-item text-center p-4 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <h4 class="text-sm mb-1 light:text-gray-600 dark:text-gray-300">Hari Puasa</h4>
+                        <p id="totalFasts" class="text-2xl font-bold light:text-blue-600 dark:text-green-400">0</p>
+                    </div>
+                    <div class="stat-item text-center p-4 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <h4 class="text-sm mb-1 light:text-gray-600 dark:text-gray-300">Bacaan Qur'an</h4>
+                        <p id="totalQuran" class="text-2xl font-bold light:text-blue-600 dark:text-green-400">0</p>
+                    </div>
+                    <div class="stat-item text-center p-4 rounded-lg light:bg-blue-50 dark:bg-gray-700">
+                        <h4 class="text-sm mb-1 light:text-gray-600 dark:text-gray-300">Dzikir & Doa</h4>
+                        <p id="totalDzikir" class="text-2xl font-bold light:text-blue-600 dark:text-green-400">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="light:bg-gray-200 dark:bg-gray-800 py-4 text-center transition-colors duration-300">
+        <p class="text-sm light:text-gray-600 dark:text-gray-300">RamadhanJS Challenge 2025 - Aditya Fakhri Riansyah</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
