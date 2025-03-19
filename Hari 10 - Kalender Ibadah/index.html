@@ -1,31 +1,119 @@
 <!DOCTYPE html>
-<html lang="id" class="light">
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalender Ibadah Interaktif</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+        .calendar-day {
+            transition: all 0.3s ease;
+        }
+        .calendar-day:hover {
+            transform: translateY(-5px);
+        }
+        .worship-item {
+            transition: all 0.2s ease;
+        }
+        .worship-item.completed {
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+        html.dark {
+            background-color: #111827;
+            color: #fff;
+        }
+        html.light {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .dark .calendar-container {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+        }
+        .light .calendar-container {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        }
+        .theme-toggle {
+            transition: all 0.5s ease;
+        }
+        .theme-toggle:hover {
+            transform: rotate(45deg);
+        }
+        .shadow-neon {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .dark .shadow-neon {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        }
+        @keyframes pulse-light {
+            0%, 100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.7); }
+            50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.9); }
+        }
+        @keyframes pulse-dark {
+            0%, 100% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.7); }
+            50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.9); }
+        }
+        .light .animate-pulse {
+            animation: pulse-light 2s infinite;
+        }
+        .dark .animate-pulse {
+            animation: pulse-dark 2s infinite;
+        }
+        .day-completed:before {
+            content: '✓';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            z-index: 10;
+        }
+        .light .day-completed:before {
+            background: #3B82F6;
+            color: white;
+        }
+        .dark .day-completed:before {
+            background: #10B981;
+            color: white;
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .light .glass-effect {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .dark .glass-effect {
+            background-color: rgba(31, 41, 55, 0.8);
+        }
+    </style>
 </head>
-<body class="font-sans transition-colors duration-300 light:bg-gray-100 dark:bg-gray-900 light:text-gray-800 dark:text-white min-h-screen">
+<body class="font-sans transition-colors duration-300 min-h-screen">
     <div class="container mx-auto px-4 py-8">
         <header class="mb-8 text-center">
             <div class="flex justify-end mb-4">
                 <button id="themeToggle" class="theme-toggle p-2 rounded-full transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
                 </button>
             </div>
-            <h1 class="text-4xl font-bold mb-2 text-transparent bg-clip-text light:bg-gradient-to-r light:from-blue-600 light:to-purple-600 dark:bg-gradient-to-r dark:from-green-400 dark:to-blue-500">Kalender Ibadah Interaktif</h1>
+            <h1 class="text-4xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">
+                Kalender Ibadah Interaktif
+            </h1>
             <p class="text-lg light:text-gray-600 dark:text-gray-300">Catat dan pantau ibadah harian Anda</p>
         </header>
 
-        <div class="calendar-container rounded-2xl p-6 mb-8 shadow-lg transition-all duration-300 light:shadow-neon-light dark:shadow-neon-dark">
+        <div class="calendar-container rounded-2xl p-6 mb-8 shadow-neon animate-pulse">
             <div class="flex justify-between items-center mb-6">
                 <button id="prevMonth" class="p-2 rounded-full transition light:hover:bg-blue-100 dark:hover:bg-gray-700">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -56,7 +144,7 @@
         </div>
 
         <div id="worshipDetails" class="hidden my-8">
-            <div class="glass-effect rounded-xl p-6 transition-all duration-300 light:bg-white/80 dark:bg-gray-800/80 light:shadow-neon-light dark:shadow-neon-dark">
+            <div class="glass-effect rounded-xl p-6 transition-all duration-300 shadow-neon animate-pulse">
                 <div class="flex justify-between items-center mb-4">
                     <h3 id="selectedDate" class="text-xl font-bold"></h3>
                     <button id="closeDetails" class="rounded-full p-1 light:hover:bg-gray-200 dark:hover:bg-gray-700">
@@ -108,13 +196,13 @@
                     </div>
                 </div>
                 <div class="mt-6">
-                    <button id="saveWorship" class="w-full py-2 rounded-lg font-medium transition-all duration-300 light:bg-blue-600 light:hover:bg-blue-700 dark:bg-green-600 dark:hover:bg-green-700 text-white">Simpan</button>
+                    <button id="saveWorship" class="w-full py-2 rounded-lg font-medium transition-all duration-300 bg-green-600 hover:bg-green-700 text-white cursor-pointer">Simpan</button>
                 </div>
             </div>
         </div>
         
         <div class="stats-container my-8">
-            <div class="glass-effect rounded-xl p-6 transition-all duration-300 light:bg-white/80 dark:bg-gray-800/80 light:shadow-neon-light dark:shadow-neon-dark">
+            <div class="glass-effect rounded-xl p-6 transition-all duration-300 shadow-neon animate-pulse">
                 <h3 class="text-xl font-bold mb-4">Statistik Ibadah</h3>
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                     <div class="stat-item text-center p-4 rounded-lg light:bg-blue-50 dark:bg-gray-700">
@@ -142,10 +230,392 @@
         </div>
     </div>
 
-    <footer class="light:bg-gray-200 dark:bg-gray-800 py-4 text-center transition-colors duration-300">
+    <footer class="py-4 text-center transition-colors duration-300 light:bg-gray-200 dark:bg-gray-800">
         <p class="text-sm light:text-gray-600 dark:text-gray-300">RamadhanJS Challenge 2025 - Aditya Fakhri Riansyah</p>
     </footer>
 
-    <script src="app.js"></script>
+    <script>
+        // Theme toggle functionality
+        const htmlElement = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+
+        function updateTheme() {
+            const isDark = htmlElement.classList.contains('dark');
+            document.querySelectorAll('.light\\:bg-blue-50').forEach(el => {
+                if (isDark) {
+                    el.classList.remove('bg-blue-50');
+                    el.classList.add('bg-gray-700');
+                } else {
+                    el.classList.add('bg-blue-50');
+                    el.classList.remove('bg-gray-700');
+                }
+            });
+            
+            document.querySelectorAll('.light\\:text-blue-600').forEach(el => {
+                if (isDark) {
+                    el.classList.remove('text-blue-600');
+                    el.classList.add('text-green-400');
+                } else {
+                    el.classList.add('text-blue-600');
+                    el.classList.remove('text-green-400');
+                }
+            });
+            
+            document.querySelectorAll('.light\\:text-gray-600').forEach(el => {
+                if (isDark) {
+                    el.classList.remove('text-gray-600');
+                    el.classList.add('text-gray-300');
+                } else {
+                    el.classList.add('text-gray-600');
+                    el.classList.remove('text-gray-300');
+                }
+            });
+            
+            document.querySelectorAll('.light\\:text-gray-700').forEach(el => {
+                if (isDark) {
+                    el.classList.remove('text-gray-700');
+                    el.classList.add('text-gray-200');
+                } else {
+                    el.classList.add('text-gray-700');
+                    el.classList.remove('text-gray-200');
+                }
+            });
+        }
+
+        function toggleTheme() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                htmlElement.classList.add('light');
+            } else {
+                htmlElement.classList.remove('light');
+                htmlElement.classList.add('dark');
+            }
+            localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
+            updateTheme();
+            renderCalendar(); // Re-render to update day highlighting
+        }
+
+        // Check for saved theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && 
+            window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.remove('light');
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+            htmlElement.classList.add('light');
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        updateTheme();
+
+        // Calendar functionality
+        const calendarDays = document.getElementById('calendarDays');
+        const currentMonthElement = document.getElementById('currentMonth');
+        const prevMonthButton = document.getElementById('prevMonth');
+        const nextMonthButton = document.getElementById('nextMonth');
+        const worshipDetails = document.getElementById('worshipDetails');
+        const selectedDateElement = document.getElementById('selectedDate');
+        const closeDetailsButton = document.getElementById('closeDetails');
+        const saveWorshipButton = document.getElementById('saveWorship');
+        
+        let currentDate = new Date();
+        let currentYear = currentDate.getFullYear();
+        let currentMonth = currentDate.getMonth();
+        let selectedDay = null;
+        let worshipData = JSON.parse(localStorage.getItem('worshipData')) || {};
+
+        function updateStats() {
+            let totalDays = 0;
+            let totalPrayers = 0;
+            let totalFasts = 0;
+            let totalQuran = 0;
+            let totalDzikir = 0;
+
+            Object.keys(worshipData).forEach(dateKey => {
+                const dateData = worshipData[dateKey];
+                let hasWorship = false;
+                
+                if (dateData.subuh) { totalPrayers++; hasWorship = true; }
+                if (dateData.dzuhur) { totalPrayers++; hasWorship = true; }
+                if (dateData.ashar) { totalPrayers++; hasWorship = true; }
+                if (dateData.maghrib) { totalPrayers++; hasWorship = true; }
+                if (dateData.isya) { totalPrayers++; hasWorship = true; }
+                if (dateData.tahajud) { totalPrayers++; hasWorship = true; }
+                if (dateData.dhuha) { totalPrayers++; hasWorship = true; }
+                if (dateData.puasa) { totalFasts++; hasWorship = true; }
+                if (dateData.quran) { totalQuran++; hasWorship = true; }
+                if (dateData.dzikir) { totalDzikir++; hasWorship = true; }
+
+                if (hasWorship) totalDays++;
+            });
+
+            document.getElementById('totalDays').textContent = totalDays;
+            document.getElementById('totalPrayers').textContent = totalPrayers;
+            document.getElementById('totalFasts').textContent = totalFasts;
+            document.getElementById('totalQuran').textContent = totalQuran;
+            document.getElementById('totalDzikir').textContent = totalDzikir;
+        }
+
+        function renderCalendar() {
+            calendarDays.innerHTML = '';
+            currentMonthElement.textContent = new Date(currentYear, currentMonth, 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            // Add empty cells for days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                calendarDays.appendChild(emptyDay);
+            }
+
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                const dateKey = `${currentYear}-${currentMonth + 1}-${day}`;
+                
+                dayElement.className = 'calendar-day relative bg-opacity-80 rounded-lg h-12 flex items-center justify-center cursor-pointer transition-colors duration-300';
+                
+                // Add theme-specific hover states
+                if (htmlElement.classList.contains('dark')) {
+                    dayElement.classList.add('hover:bg-gray-700');
+                } else {
+                    dayElement.classList.add('hover:bg-blue-100');
+                }
+                
+                // Check if this date has worship data
+                let hasCompleteWorship = false;
+                if (worshipData[dateKey]) {
+                    const worship = worshipData[dateKey];
+                    const totalItems = Object.keys(worship).length;
+                    const completedItems = Object.values(worship).filter(Boolean).length;
+                    
+                    if (completedItems > 0) {
+                        hasCompleteWorship = true;
+                        dayElement.classList.add('day-completed');
+                        
+                        // Add gradient background based on completion percentage
+                        const completionRate = completedItems / totalItems;
+                        if (htmlElement.classList.contains('dark')) {
+                            dayElement.style.background = `linear-gradient(to top, rgba(16, 185, 129, ${completionRate}), transparent)`;
+                        } else {
+                            dayElement.style.background = `linear-gradient(to top, rgba(59, 130, 246, ${completionRate}), transparent)`;
+                        }
+                    }
+                }
+
+                // Check if this is today
+                const today = new Date();
+                if (day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                    if (htmlElement.classList.contains('dark')) {
+                        dayElement.classList.add('ring-2', 'ring-green-400');
+                    } else {
+                        dayElement.classList.add('ring-2', 'ring-blue-500');
+                    }
+                }
+
+                dayElement.textContent = day;
+                dayElement.dataset.day = day;
+                dayElement.dataset.dateKey = dateKey;
+                
+                dayElement.addEventListener('click', () => {
+                    document.querySelectorAll('.calendar-day').forEach(el => {
+                        el.classList.remove('bg-blue-200', 'bg-gray-600');
+                    });
+                    
+                    if (htmlElement.classList.contains('dark')) {
+                        dayElement.classList.add('bg-gray-600');
+                    } else {
+                        dayElement.classList.add('bg-blue-200');
+                    }
+                    
+                    selectedDay = dateKey;
+                    selectedDateElement.textContent = new Date(currentYear, currentMonth, day).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                    
+                    // Set checkboxes based on saved data
+                    const dayData = worshipData[dateKey] || {};
+                    document.getElementById('subuh').checked = dayData.subuh || false;
+                    document.getElementById('dzuhur').checked = dayData.dzuhur || false;
+                    document.getElementById('ashar').checked = dayData.ashar || false;
+                    document.getElementById('maghrib').checked = dayData.maghrib || false;
+                    document.getElementById('isya').checked = dayData.isya || false;
+                    document.getElementById('tahajud').checked = dayData.tahajud || false;
+                    document.getElementById('dhuha').checked = dayData.dhuha || false;
+                    document.getElementById('puasa').checked = dayData.puasa || false;
+                    document.getElementById('quran').checked = dayData.quran || false;
+                    document.getElementById('dzikir').checked = dayData.dzikir || false;
+                    
+                    // Update checkbox parent classes based on checked state
+                    document.querySelectorAll('.worship-item input[type="checkbox"]').forEach(checkbox => {
+                        if (checkbox.checked) {
+                            checkbox.parentElement.classList.add('completed');
+                        } else {
+                            checkbox.parentElement.classList.remove('completed');
+                        }
+                    });
+                    
+                    worshipDetails.classList.remove('hidden');
+                    worshipDetails.scrollIntoView({ behavior: 'smooth' });
+                });
+                
+                calendarDays.appendChild(dayElement);
+            }
+        }
+
+        // Initialize calendar
+        renderCalendar();
+        updateStats();
+
+        // Event listeners for month navigation
+        prevMonthButton.addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+        });
+
+        nextMonthButton.addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar();
+        });
+
+        // Close worship details
+        closeDetailsButton.addEventListener('click', () => {
+            worshipDetails.classList.add('hidden');
+        });
+
+        // Save worship data
+        saveWorshipButton.addEventListener('click', () => {
+            if (!selectedDay) return;
+            
+            // Create object for the selected day if it doesn't exist
+            if (!worshipData[selectedDay]) {
+                worshipData[selectedDay] = {};
+            }
+            
+            // Save checkbox states
+            worshipData[selectedDay].subuh = document.getElementById('subuh').checked;
+            worshipData[selectedDay].dzuhur = document.getElementById('dzuhur').checked;
+            worshipData[selectedDay].ashar = document.getElementById('ashar').checked;
+            worshipData[selectedDay].maghrib = document.getElementById('maghrib').checked;
+            worshipData[selectedDay].isya = document.getElementById('isya').checked;
+            worshipData[selectedDay].tahajud = document.getElementById('tahajud').checked;
+            worshipData[selectedDay].dhuha = document.getElementById('dhuha').checked;
+            worshipData[selectedDay].puasa = document.getElementById('puasa').checked;
+            worshipData[selectedDay].quran = document.getElementById('quran').checked;
+            worshipData[selectedDay].dzikir = document.getElementById('dzikir').checked;
+            
+            // Save to localStorage
+            localStorage.setItem('worshipData', JSON.stringify(worshipData));
+            
+            // Update calendar UI
+            renderCalendar();
+            updateStats();
+            
+            // Provide visual feedback
+            const originalText = saveWorshipButton.textContent;
+            saveWorshipButton.textContent = 'Tersimpan!';
+            
+            if (htmlElement.classList.contains('dark')) {
+                saveWorshipButton.classList.add('bg-blue-600');
+                saveWorshipButton.classList.remove('bg-green-600');
+            } else {
+                saveWorshipButton.classList.add('bg-green-600');
+                saveWorshipButton.classList.remove('bg-blue-600');
+            }
+            
+            setTimeout(() => {
+                saveWorshipButton.textContent = originalText;
+                if (htmlElement.classList.contains('dark')) {
+                    saveWorshipButton.classList.remove('bg-blue-600');
+                    saveWorshipButton.classList.add('bg-green-600');
+                } else {
+                    saveWorshipButton.classList.remove('bg-green-600');
+                    saveWorshipButton.classList.add('bg-blue-600');
+                }
+            }, 2000);
+            
+            // Close details panel after saving
+            setTimeout(() => {
+                worshipDetails.classList.add('hidden');
+            }, 1500);
+        });
+        
+        // Toggle completed class on worship items when checkboxes are clicked
+        document.querySelectorAll('.worship-item input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    this.parentElement.classList.add('completed');
+                } else {
+                    this.parentElement.classList.remove('completed');
+                }
+            });
+        });
+        
+        // Add a keyboard shortcut for closing the details panel (Escape key)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !worshipDetails.classList.contains('hidden')) {
+                worshipDetails.classList.add('hidden');
+            }
+        });
+        
+        // Add a helper function to get percentage of completed prayers for a day
+        function getCompletionPercentage(dateKey) {
+            if (!worshipData[dateKey]) return 0;
+            
+            const data = worshipData[dateKey];
+            const total = Object.keys(data).length;
+            const completed = Object.values(data).filter(Boolean).length;
+            
+            return completed / total * 100;
+        }
+        
+        // Add responsive design adjustments
+        function handleResize() {
+            if (window.innerWidth < 640) {
+                document.querySelectorAll('.stat-item h4').forEach(el => {
+                    el.classList.add('text-xs');
+                    el.classList.remove('text-sm');
+                });
+            } else {
+                document.querySelectorAll('.stat-item h4').forEach(el => {
+                    el.classList.add('text-sm');
+                    el.classList.remove('text-xs');
+                });
+            }
+        }
+        
+        // Call once on load and add event listener
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        
+        // Add tooltips to calendar days to show completion percentage
+        function addTooltips() {
+            document.querySelectorAll('.calendar-day[data-date-key]').forEach(day => {
+                const dateKey = day.dataset.dateKey;
+                const percentage = getCompletionPercentage(dateKey);
+                
+                if (percentage > 0) {
+                    day.setAttribute('title', `${percentage.toFixed(0)}% ibadah tercatat`);
+                }
+            });
+        }
+        
+        // Call addTooltips after rendering the calendar
+        const originalRenderCalendar = renderCalendar;
+        renderCalendar = function() {
+            originalRenderCalendar();
+            addTooltips();
+        };
+        
+        // Initialize tooltips
+        addTooltips();
+    </script>
 </body>
 </html>
