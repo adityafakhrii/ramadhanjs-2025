@@ -1,0 +1,117 @@
+[
+  {
+    "year": 570,
+    "event": "Kelahiran Nabi Muhammad ﷺ",
+    "description": "Nabi Muhammad ﷺ lahir di Mekkah, di tahun yang dikenal sebagai Tahun Gajah, karena peristiwa pasukan gajah yang hendak menyerang Ka'bah."
+  },
+  {
+    "year": 610,
+    "event": "Wahyu Pertama di Gua Hira",
+    "description": "Nabi Muhammad ﷺ menerima wahyu pertama dari malaikat Jibril di Gua Hira, menandai awal dari kenabiannya."
+  },
+  {
+    "year": 613,
+    "event": "Dakwah Islam Secara Terbuka",
+    "description": "Nabi mulai berdakwah secara terbuka, mengajak masyarakat Quraisy untuk meninggalkan penyembahan berhala dan kembali kepada tauhid."
+  },
+  {
+    "year": 622,
+    "event": "Hijrah ke Madinah",
+    "description": "Nabi Muhammad ﷺ dan para sahabat berhijrah ke Madinah karena tekanan dari kaum Quraisy di Mekkah. Peristiwa ini menjadi awal kalender Hijriyah."
+  },
+  {
+    "year": 624,
+    "event": "Perang Badar",
+    "description": "Pertempuran pertama antara kaum Muslim dan Quraisy yang dimenangkan oleh umat Islam meskipun memiliki jumlah pasukan yang lebih sedikit."
+  },
+  {
+    "year": 625,
+    "event": "Perang Uhud",
+    "description": "Umat Islam mengalami kekalahan karena kelalaian pasukan pemanah yang meninggalkan pos mereka."
+  },
+  {
+    "year": 627,
+    "event": "Perang Khandaq",
+    "description": "Madinah diserang oleh pasukan Quraisy dalam jumlah besar, tetapi berhasil bertahan dengan strategi menggali parit di sekeliling kota."
+  },
+  {
+    "year": 630,
+    "event": "Penaklukan Mekkah",
+    "description": "Nabi Muhammad ﷺ dan para sahabat menaklukkan Mekkah tanpa pertumpahan darah, menghancurkan berhala di Ka'bah, dan menyebarkan Islam lebih luas."
+  },
+  {
+    "year": 632,
+    "event": "Wafatnya Nabi Muhammad ﷺ",
+    "description": "Setelah menyampaikan khutbah terakhir di Haji Wada', Nabi Muhammad ﷺ wafat di Madinah pada usia 63 tahun."
+  },
+  {
+    "year": 632,
+    "event": "Khilafah Abu Bakar As-Siddiq",
+    "description": "Abu Bakar menjadi khalifah pertama Islam dan berhasil menyatukan kembali jazirah Arab setelah wafatnya Nabi Muhammad ﷺ."
+  },
+  {
+    "year": 634,
+    "event": "Khilafah Umar bin Khattab",
+    "description": "Umar bin Khattab menjadi khalifah kedua dan Islam berkembang pesat hingga Persia, Syam, dan Mesir."
+  },
+  {
+    "year": 644,
+    "event": "Khilafah Utsman bin Affan",
+    "description": "Utsman bin Affan menjadi khalifah ketiga dan menyusun mushaf Al-Qur'an dalam satu standar yang digunakan hingga kini."
+  },
+  {
+    "year": 656,
+    "event": "Khilafah Ali bin Abi Thalib",
+    "description": "Ali bin Abi Thalib menjadi khalifah keempat, tetapi terjadi konflik internal yang menyebabkan perang saudara antara Muslim."
+  },
+  {
+    "year": 661,
+    "event": "Awal Kekhalifahan Umayyah",
+    "description": "Dinasti Umayyah berkuasa dengan pusat pemerintahan di Damaskus, Islam berkembang ke Afrika Utara dan Spanyol."
+  },
+  {
+    "year": 750,
+    "event": "Awal Kekhalifahan Abbasiyah",
+    "description": "Dinasti Abbasiyah menggantikan Umayyah, dengan Baghdad sebagai pusat ilmu pengetahuan dunia Islam."
+  },
+  {
+    "year": 1258,
+    "event": "Ke jatuhan Baghdad oleh Mongol",
+    "description": "Pasukan Mongol menghancurkan Baghdad, menandai akhir kejayaan Kekhalifahan Abbasiyah."
+  },
+  {
+    "year": 1299,
+    "event": "Berdirinya Kekhalifahan Utsmaniyah",
+    "description": "Kesultanan Utsmaniyah berdiri di Turki dan berkembang menjadi salah satu kekuatan besar Islam."
+  },
+  {
+    "year": 1453,
+    "event": "Penaklukan Konstantinopel",
+    "description": "Sultan Mehmed II dari Utsmaniyah menaklukkan Konstantinopel, menjadikannya Istanbul, ibu kota baru Islam."
+  },
+  {
+    "year": 1492,
+    "event": "Jatuhnya Granada",
+    "description": "Dinasti Islam terakhir di Spanyol, Bani Nasrid, menyerah kepada Spanyol, mengakhiri 800 tahun kekuasaan Islam di Andalusia."
+  },
+  {
+    "year": 1918,
+    "event": "Runtuhnya Kekhalifahan Utsmaniyah",
+    "description": "Setelah Perang Dunia I, Kekhalifahan Utsmaniyah melemah dan akhirnya dihapuskan pada 1924."
+  },
+  {
+    "year": 1948,
+    "event": "Berdirinya Negara Israel",
+    "description": "Palestina diduduki oleh Israel, menyebabkan konflik yang terus berlangsung hingga sekarang."
+  },
+  {
+    "year": 1979,
+    "event": "Revolusi Islam Iran",
+    "description": "Iran berubah menjadi Republik Islam setelah revolusi yang dipimpin oleh Ayatollah Khomeini."
+  },
+  {
+    "year": 2000,
+    "event": "Era Digital dan Perkembangan Islam",
+    "description": "Islam terus berkembang dengan adanya media sosial dan platform digital yang mendukung penyebaran dakwah secara global."
+  }
+]
